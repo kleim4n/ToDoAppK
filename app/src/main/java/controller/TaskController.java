@@ -50,18 +50,24 @@ public class TaskController {
         PreparedStatement statement = null;
         
         try{
+            //Tentar estabelecer a conexão com BD
             connection = ConnectionFactory.getConnection();
+            //Preperando a query
             statement = connection.prepareStatement(sql);
+            //Set dos valores no statement
             statement.setInt(1, task.getIdProject());
-            statement.setString(2, task.getDescription());
-            statement.setString(3, task.getNotes());
-            statement.setBoolean(4, task.isIsCompleted());
-            statement.setDate(5, new Date(task.getDeadline().getTime()));
-            statement.setDate(6, new Date(task.getCreatedAt().getTime()));
-            statement.setDate(7, new Date(task.getUpdatedAt().getTime()));
+            statement.setString(2, task.getName());
+            statement.setString(3, task.getDescription());
+            statement.setString(4, task.getNotes());
+            statement.setBoolean(5, task.isIsCompleted());
+            statement.setDate(6, new Date(task.getDeadline().getTime()));
+            statement.setDate(7, new Date(task.getCreatedAt().getTime()));
+            statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
+            statement.setInt(9, task.getId());
+            //Executar query
             statement.execute();
         } catch (Exception ex){
-            throw new RuntimeException("Erro na tarefa" + ex.getMessage(), ex);
+            throw new RuntimeException("Erro ao atualizar a tarefa" + ex.getMessage(), ex);
         }
     }
     
@@ -72,6 +78,7 @@ public class TaskController {
         PreparedStatement statement = null;
         
         try {
+            //Criar conexão com BD
             conn = ConnectionFactory.getConnection();
             statement = conn.prepareStatement(sql);
             statement.setInt(1, taskId);
@@ -93,10 +100,14 @@ public class TaskController {
         List<Task> tasks = new ArrayList<Task>();
         
         try{
+            //Criação de conexão
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
+            //Set do valor correspondente ao filtro de busca
             statement.setInt(1, idProject);
+            //Valor retornado pela execução da query
             resultset = statement.executeQuery();
+            //Enquanto houverem valores a serem percorridos no resultset
             while (resultset.next()){
                 Task task = new Task();
                 task.setId(resultset.getInt("id"));
@@ -112,7 +123,7 @@ public class TaskController {
             }
             
         } catch (Exception ex){
-            throw new RuntimeException("Erro ao deletar tarefa " + ex.getMessage(), ex);
+            throw new RuntimeException("Erro ao inserir a tarefa " + ex.getMessage(), ex);
         } finally {
             ConnectionFactory.closeConnection(connection, statement, resultset);
         }
