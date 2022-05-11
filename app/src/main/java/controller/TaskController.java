@@ -123,7 +123,7 @@ public class TaskController {
             }
             
         } catch (Exception ex){
-            throw new RuntimeException("Erro ao inserir a tarefa " + ex.getMessage(), ex);
+            throw new RuntimeException("Erro ao buscar as tarefas " + ex.getMessage(), ex);
         } finally {
             ConnectionFactory.closeConnection(connection, statement, resultset);
         }
