@@ -11,7 +11,7 @@ import java.awt.Font;
  *
  * @author gklei
  */
-public class MainScreen extends javax.swing.JFrame {
+public final class MainScreen extends javax.swing.JFrame {
 
     /**
      * Creates new form MainScreen
@@ -133,6 +133,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabelProjectsAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adicionar.png"))); // NOI18N
         jLabelProjectsAdd.setAlignmentX(0.5F);
+        jLabelProjectsAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelProjectsAddMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelProjectsLayout = new javax.swing.GroupLayout(jPanelProjects);
         jPanelProjects.setLayout(jPanelProjectsLayout);
@@ -297,6 +302,12 @@ public class MainScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabelProjectsAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjectsAddMouseClicked
+        // TODO add your handling code here:
+        ProjectjDialogScreen projectjDialogScreen = new ProjectjDialogScreen(this, rootPaneCheckingEnabled);
+        projectjDialogScreen.setVisible(true);
+    }//GEN-LAST:event_jLabelProjectsAddMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -361,5 +372,5 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.getTableHeader().setForeground(new Color(255,255,255));
         //Criando sorter para table das tarefas
         jTableTasks.setAutoCreateRowSorter(true);
-}
+    }
 }

@@ -250,6 +250,9 @@
             </Property>
             <Property name="alignmentX" type="float" value="0.5"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelProjectsAddMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
