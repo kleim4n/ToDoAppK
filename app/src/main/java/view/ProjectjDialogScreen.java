@@ -5,8 +5,7 @@
 package view;
 
 import controller.ProjectController;
-import java.awt.HeadlessException;
-import java.sql.Date;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import model.Project;
 
@@ -16,7 +15,7 @@ import model.Project;
  */
 public class ProjectjDialogScreen extends javax.swing.JDialog {
     
-    ProjectController controller;
+    ProjectController controller = new ProjectController();
 
     /**
      * Creates new form ProjectjDialogScreen
@@ -25,7 +24,9 @@ public class ProjectjDialogScreen extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         //Criando controlador
-        controller = new ProjectController();
+        if (controller == null){
+            controller = new ProjectController();
+        }
     }
 
     /**
@@ -41,10 +42,10 @@ public class ProjectjDialogScreen extends javax.swing.JDialog {
         jLabelToolbarTitle = new javax.swing.JLabel();
         jLabelToolbarSave = new javax.swing.JLabel();
         jPanelProject = new javax.swing.JPanel();
-        jTextFieldName = new javax.swing.JTextField();
+        jTextFieldNameNewProject = new javax.swing.JTextField();
         jLabelDescription = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaDescription = new javax.swing.JTextArea();
+        jTextAreaDescriptionNewProject = new javax.swing.JTextArea();
         jLabelName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -86,15 +87,15 @@ public class ProjectjDialogScreen extends javax.swing.JDialog {
 
         jPanelProject.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldNameNewProject.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabelDescription.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelDescription.setText("Descrição");
 
-        jTextAreaDescription.setColumns(20);
-        jTextAreaDescription.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextAreaDescription.setRows(5);
-        jScrollPane1.setViewportView(jTextAreaDescription);
+        jTextAreaDescriptionNewProject.setColumns(20);
+        jTextAreaDescriptionNewProject.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextAreaDescriptionNewProject.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaDescriptionNewProject);
 
         jLabelName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelName.setText("Nome");
@@ -106,7 +107,7 @@ public class ProjectjDialogScreen extends javax.swing.JDialog {
             .addGroup(jPanelProjectLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelProjectLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldName)
+                    .addComponent(jTextFieldNameNewProject)
                     .addComponent(jLabelDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                     .addComponent(jLabelName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -118,7 +119,7 @@ public class ProjectjDialogScreen extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabelName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldNameNewProject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDescription)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -150,19 +151,22 @@ public class ProjectjDialogScreen extends javax.swing.JDialog {
 
     private void jLabelToolbarSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelToolbarSaveMouseClicked
         try{
+            if (controller == null){
+                controller = new ProjectController();
+            }
             Project project = new Project();
             //Carrega as strings digitadas no projeto novo
-            project.setName(jTextFieldName.getText());
-            project.setDescription(jTextAreaDescription.getText());
-            //project.setCreatedAt(new Date(1, 1, 1));
+            project.setName(jTextFieldNameNewProject.getText());
+            project.setDescription(jTextAreaDescriptionNewProject.getText());
+            project.setCreatedAt(new Date(System.currentTimeMillis()));
+            project.setUpdatedAt(new Date(System.currentTimeMillis()));
             controller.save(project);
             //Mostra mensagem de operação bem sucedida
             JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso.");
-        } catch (HeadlessException e) {
-            //throw news RuntimeException("Erro ao salvar o projeto" + ex.getMessage());
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        } catch (Exception e){
+            //JOptionPane.showMessageDialog(rootPane, "ProjectjDialogScreen "+e.getLocalizedMessage());
+            throw new RuntimeException("Erro ProjectjDialogScreen " + e.getLocalizedMessage(), e);
         }
-        
         //Fecha janela
         this.dispose();
     }//GEN-LAST:event_jLabelToolbarSaveMouseClicked
@@ -217,7 +221,7 @@ public class ProjectjDialogScreen extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelProject;
     private javax.swing.JPanel jPanelToolbar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaDescription;
-    private javax.swing.JTextField jTextFieldName;
+    private javax.swing.JTextArea jTextAreaDescriptionNewProject;
+    private javax.swing.JTextField jTextFieldNameNewProject;
     // End of variables declaration//GEN-END:variables
 }

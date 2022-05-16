@@ -33,8 +33,8 @@ public class ProjectController {
             statement.setDate(3, new Date(project.getCreatedAt().getTime()));
             statement.setDate(4, new Date(project.getUpdatedAt().getTime()));
             statement.execute();
-        } catch (Exception ex) {
-            throw new RuntimeException("Erro ao salvar o projeto" + ex.getMessage());
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao salvar ProjectController ", ex);
         } finally{
             ConnectionFactory.closeConnection(connection, statement);
         }
@@ -58,8 +58,10 @@ public class ProjectController {
             statement.setInt(5, project.getId());
             //Executar query
             statement.execute();
-        } catch (Exception ex){
+        } catch (SQLException ex){
             throw new RuntimeException("Erro ao atualizar  o projeto" + ex.getMessage(), ex);
+        } finally {
+            ConnectionFactory.closeConnection(connection, statement);
         }
     }
     
@@ -75,7 +77,7 @@ public class ProjectController {
             statement = conn.prepareStatement(sql);
             statement.setInt(1, projectId);
             statement.execute();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Erro ao deletar  o projeto.");
         } finally{
             ConnectionFactory.closeConnection(conn, statement);
@@ -89,7 +91,7 @@ public class ProjectController {
         PreparedStatement statement = null;
         ResultSet resultset = null;
         
-        List<Project> projects = new ArrayList<Project>();
+        List<Project> projects = new ArrayList<>();
         
         try{
             //Criação de conexão
@@ -110,7 +112,7 @@ public class ProjectController {
                 projects.add(project);
             }
             
-        } catch (Exception ex){
+        } catch (SQLException ex){
             throw new RuntimeException("Erro ao buscar os projetos " + ex.getMessage(), ex);
         } finally {
             ConnectionFactory.closeConnection(connection, statement, resultset);

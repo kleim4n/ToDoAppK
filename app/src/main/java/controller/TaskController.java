@@ -20,7 +20,7 @@ import util.ConnectionFactory;
  */
 public class TaskController {
     public void save(Task task){
-        String sql = "INSERT INTO tasks (idProject, name, description, completed, notes, deadline, createdAt, updatedAt) VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tasks (idProject, name, description, completed, notes, deadline, createdAt, updatedAt) VALUES (?,?,?,?,?,?,?,?)";
         
         Connection connection = null;
         PreparedStatement statement = null;
@@ -38,7 +38,7 @@ public class TaskController {
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
             statement.execute();
         } catch (SQLException ex) {
-            throw new RuntimeException("Erro ao salvar tarefa" + ex.getMessage());
+            throw new RuntimeException("Erro ao salvar TaskController " + ex.getMessage());
         } finally{
             ConnectionFactory.closeConnection(connection, statement);
         }
@@ -68,6 +68,8 @@ public class TaskController {
             statement.execute();
         } catch (Exception ex){
             throw new RuntimeException("Erro ao atualizar a tarefa" + ex.getMessage(), ex);
+        } finally {
+            ConnectionFactory.closeConnection(connection, statement);
         }
     }
     
@@ -84,7 +86,7 @@ public class TaskController {
             statement.setInt(1, taskId);
             statement.execute();
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao deletar a tarefa.");
+            throw new RuntimeException("Erro ao deletar  TaskController" + e.getMessage(), e);
         } finally{
             ConnectionFactory.closeConnection(conn, statement);
         }
@@ -123,7 +125,7 @@ public class TaskController {
             }
             
         } catch (Exception ex){
-            throw new RuntimeException("Erro ao buscar as tarefas " + ex.getMessage(), ex);
+            throw new RuntimeException("Erro ao buscar TaskController " + ex.getMessage(), ex);
         } finally {
             ConnectionFactory.closeConnection(connection, statement, resultset);
         }
