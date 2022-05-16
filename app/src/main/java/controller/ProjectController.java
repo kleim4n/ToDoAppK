@@ -108,7 +108,7 @@ public class ProjectController {
                 project.setName(resultset.getString("name"));
                 project.setDescription(resultset.getString("description"));
                 project.setCreatedAt(resultset.getDate("createdAt"));
-                project.setUpdatedAt(resultset.getDate("updateAt"));
+                project.setUpdatedAt(resultset.getDate("updatedAt"));
                 projects.add(project);
             }
             
