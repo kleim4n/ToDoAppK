@@ -120,7 +120,7 @@ public class TaskController {
                 task.setIsCompleted(resultset.getBoolean("completed"));
                 task.setDeadline(resultset.getDate("deadline"));
                 task.setCreatedAt(resultset.getDate("createdAt"));
-                task.setUpdatedAt(resultset.getDate("updateAt"));
+                task.setUpdatedAt(resultset.getDate("updatedAt"));
                 tasks.add(task);
             }
             
