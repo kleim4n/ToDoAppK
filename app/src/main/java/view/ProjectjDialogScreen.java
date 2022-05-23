@@ -151,24 +151,25 @@ public class ProjectjDialogScreen extends javax.swing.JDialog {
 
     private void jLabelToolbarSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelToolbarSaveMouseClicked
         try{
-            if (controller == null){
-                controller = new ProjectController();
+            if (!jTextFieldNameNewProject.getText().equals("")){
+                Project project = new Project();
+                //Carrega as strings digitadas no projeto novo
+                project.setName(jTextFieldNameNewProject.getText());
+                project.setDescription(jTextAreaDescriptionNewProject.getText());
+                project.setCreatedAt(new Date(System.currentTimeMillis()));
+                project.setUpdatedAt(new Date(System.currentTimeMillis()));
+                controller.save(project);
+                //Mostra mensagem de operação bem sucedida
+                JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso.");
+                //Fecha janela
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Campo 'NOME' vazio.");
             }
-            Project project = new Project();
-            //Carrega as strings digitadas no projeto novo
-            project.setName(jTextFieldNameNewProject.getText());
-            project.setDescription(jTextAreaDescriptionNewProject.getText());
-            project.setCreatedAt(new Date(System.currentTimeMillis()));
-            project.setUpdatedAt(new Date(System.currentTimeMillis()));
-            controller.save(project);
-            //Mostra mensagem de operação bem sucedida
-            JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso.");
         } catch (Exception e){
             //JOptionPane.showMessageDialog(rootPane, "ProjectjDialogScreen "+e.getLocalizedMessage());
             throw new RuntimeException("Erro ProjectjDialogScreen " + e.getLocalizedMessage(), e);
         }
-        //Fecha janela
-        this.dispose();
     }//GEN-LAST:event_jLabelToolbarSaveMouseClicked
 
     /**

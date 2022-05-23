@@ -183,26 +183,30 @@ public class TaskJDialogScreen extends javax.swing.JDialog {
     private void jLabelAddNewTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddNewTaskMouseClicked
         // TODO add your handling code here:
         try{
-            Task task = new Task();
-            //Set do projeto a qual a tarefa pertence
-            task.setIdProject(project.getId());
-            //Set das demais propriedades da tarefa
-            task.setName(jTextFieldNameNewTask.getText());
-            task.setDescription(jTextAreaDescriptionNewTask.getText());
-            //Realizando a leitura da data em STR e a convertendo para Date
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date deadline = dateFormat.parse(jFormattedTextFieldDeadlineNewTask.getText());
-            task.setDeadline(deadline);
-            task.setCreatedAt(new Date(System.currentTimeMillis()));
-            task.setUpdatedAt(new Date(System.currentTimeMillis()));
-            task.setNotes(jTextAreaNotesNewTask.getText());
-            task.setIsCompleted(false);
-            controller.save(task);
-            JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso.");
+            if(!jTextFieldNameNewTask.getText().equals("") && !jFormattedTextFieldDeadlineNewTask.getText().equals("")){
+                Task task = new Task();
+                //Set do projeto a qual a tarefa pertence
+                task.setIdProject(project.getId());
+                //Set das demais propriedades da tarefa
+                task.setName(jTextFieldNameNewTask.getText());
+                task.setDescription(jTextAreaDescriptionNewTask.getText());
+                //Realizando a leitura da data em STR e a convertendo para Date
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date deadline = dateFormat.parse(jFormattedTextFieldDeadlineNewTask.getText());
+                task.setDeadline(deadline);
+                task.setCreatedAt(new Date(System.currentTimeMillis()));
+                task.setUpdatedAt(new Date(System.currentTimeMillis()));
+                task.setNotes(jTextAreaNotesNewTask.getText());
+                task.setIsCompleted(false);
+                controller.save(task);
+                JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso.");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Campo 'NOME' ou 'PRAZO' vazio.");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage() +" erro TaskJDialogScreen ");
         }
-        this.dispose();
     }//GEN-LAST:event_jLabelAddNewTaskMouseClicked
 
     /**
