@@ -286,7 +286,7 @@ public class TaskJDialogScreen extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     public void setProject(Project project) {
-        this.project = project;
+            this.project = project;
     }
     
     public boolean areFieldsValid(){
